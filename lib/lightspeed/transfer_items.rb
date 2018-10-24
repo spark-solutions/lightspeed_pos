@@ -11,8 +11,8 @@ module Lightspeed
       super(params: params.merge(transferID: transferID, action: 'GET_SINGLE'))
     end
 
-    def find(transferID:, itemID:)
-      first(transferID: transferID, params: { itemID: itemID }) || handle_not_found(itemID)
+    def find(transferID:, transferItemID:)
+      first(transferID: transferID, params: { transferItemID: transferItemID }) || handle_not_found(itemID)
     end
 
     def all(transferID:, params: {})
