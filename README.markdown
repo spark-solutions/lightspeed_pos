@@ -139,7 +139,7 @@ account.transfer_items.all( transferID: 3 )
 ```ruby
 account.transfer_items.first( transferID: 3 )
 # OR
-account.transfer_items.find( transferID: 3, itemID: 40697 )
+account.transfer_items.find( transferID: 3, transferItemID: 1 )
 ```
 
 * Create TransferItems for specific transfer:
