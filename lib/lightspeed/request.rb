@@ -3,16 +3,14 @@ require 'net/http'
 
 module Lightspeed
   class Request
-    attr_accessor :raw_request, :bucket_max, :bucket_level
-
-    SECONDS_TO_WAIT_WHEN_THROTTLED = 60 # API requirements.
+    attr_accessor :raw_request, :bucket_max, :bucket_level, :units_per_second
 
     class << self
       attr_writer :verbose
     end
 
     def self.verbose?
-      !! @verbose
+      !!@verbose
     end
 
     def self.base_host
@@ -73,8 +71,8 @@ module Lightspeed
     end
 
     def retry_throttled_request
-      puts 'retrying throttled request after 60s.' if self.class.verbose?
-      sleep SECONDS_TO_WAIT_WHEN_THROTTLED
+      puts 'retrying throttled request...' if self.class.verbose?
+      sleep seconds_to_wait_when_throttled
       perform
     end
 
@@ -95,6 +93,7 @@ module Lightspeed
     def extract_rate_limits(response)
       if bucket_headers = response["X-LS-API-Bucket-Level"]
         @bucket_level, @bucket_max = bucket_headers.split("/").map(&:to_f)
+        @units_per_second = @bucket_max / 60
       end
     end
 
@@ -113,5 +112,12 @@ module Lightspeed
       end
     end
 
+    def seconds_to_wait_when_throttled
+      (units - (bucket_max - bucket_level)) / units_per_second
+    end
+
+    def units
+      @raw_request.is_a? Net::HTTP::Get ? 1 : 10
+    end
   end
 end
