@@ -117,7 +117,7 @@ module Lightspeed
     end
 
     def units
-      @raw_request.is_a? Net::HTTP::Get ? 1 : 10
+      @raw_request.is_a?(Net::HTTP::Get) ? 1 : 10
     end
   end
 end
