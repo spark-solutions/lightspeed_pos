@@ -53,7 +53,7 @@ module Lightspeed
       Tags: :hash
     )
 
-    relationships :ItemMatrix, :Category, :Images, DefaultVendor: :Vendor
+    # relationships :ItemMatrix, :Category, :Images, DefaultVendor: :Vendor
 
     def prices
       @prices ||= Lightspeed::Prices.new(self.Prices)
