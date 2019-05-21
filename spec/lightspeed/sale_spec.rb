@@ -7,7 +7,7 @@ describe Lightspeed::Sale do
     Lightspeed::Sale.new(context: account, attributes: { "saleID" => 2 })
   end
 
-  it "can fetch a sale's Employee" do
+  xit "can fetch a sale's Employee" do
     subject.employeeID = 1
     VCR.use_cassette("account/Sales/employee") do
       employee = subject.employee

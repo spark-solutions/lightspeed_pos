@@ -50,7 +50,7 @@ module Lightspeed
       SalePayments: :hash
     )
 
-    relationships :SaleLines, :Employee
+    relationships :SaleLines#, :Employee
 
   end
 end
