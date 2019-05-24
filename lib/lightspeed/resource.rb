@@ -47,7 +47,7 @@ module Lightspeed
         when :string then value
         when :integer then value.to_i
         when :id then value.to_i
-        when :datetime then DateTime.parse(value)
+        when :datetime, :timestamp then DateTime.parse(value)
         when :boolean then value == 'true'
         when :decimal then BigDecimal.new(value)
         when :hash then Hash.new(value)
